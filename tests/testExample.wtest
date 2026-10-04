@@ -3,8 +3,8 @@ import example.*
 
 describe "groupo de tests" {
 
-  test "Payer comeinza en el centro del tabler" {
-    assert.equals(game.center(), player.position())
-  }
+  //test "Payer comienza en el centro del tablero" {
+    //assert.equals(game.center(), player.position())
+  //}
 
 }

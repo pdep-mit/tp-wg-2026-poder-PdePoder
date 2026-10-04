@@ -6,20 +6,30 @@ import wollok.game.*
 
 
 object config{
-    method alturaMaxima() = 16
-	method anchoMaximo() = 16
-	
 
 	method configurarJuego(){
+        game.title("Grupo: PdePoder | La Llave")
+        self.configurarDimensiones()
+
         self.detallesVisuales()
         self.configurarAcciones()
         self.configurarColisiones()
         self.configurarMovimientoFantasma()
-}
+    }
+
+    method configurarDimensiones(){
+        game.height(10)
+        game.width(15)
+        //game.cellSize(64)
+        game.boardGround("fondo1015.png")
+    }
 
     method detallesVisuales(){
         game.addVisual(personaje)
+        game.addVisual(llave)
         game.addVisual(fantasma)
+        game.addVisual(serpiente1)
+        game.addVisual(escorpion1)
     }
 
 

@@ -1,9 +1,9 @@
 # Wollok Game: Título de juego
 
-**Grupo:** Nombre de Grupo
+**Grupo:** PdePoder
 
 **Integrantes:**
-- Nombre y Apellido
+- Nicole Lujan Condori Cordova
 - Nombre y Apellido
 - Melany Gonzales Rodriguez
 - Nombre y Apellido

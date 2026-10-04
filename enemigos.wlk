@@ -21,5 +21,15 @@ object fantasma{
        personaje.position(game.origin())
     }
     }
-
 }
+
+class Serpiente{
+    var property position = game.at(12,8)
+    method image () = "snakee.png"
+}
+const serpiente1 = new Serpiente()
+class Escorpion{
+    var property position = game.at(11,1)
+    method image () = "scorpion.png"
+}
+const escorpion1 = new Escorpion()
