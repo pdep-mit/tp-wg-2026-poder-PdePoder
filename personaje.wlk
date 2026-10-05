@@ -7,9 +7,13 @@ object personaje{
 
   method image() = "lionel10.png" // Nota: tanto player como personaje falta darle identidad 
 
+  method recibirDanio() {
+    vida -= 25 // falta implementar logica de restar esa vida al personaje si colisiona con el fantasma por ahora esta para que reinicie desde 0 
+  }
   method tomar(pocion) {
     // falta implementar logica
   }
+
 }
 
 object llave{

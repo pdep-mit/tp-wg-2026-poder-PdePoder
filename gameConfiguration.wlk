@@ -2,6 +2,7 @@ import personaje.*
 import movimientos.*
 import pociones.*
 import enemigos.*
+import trampas.*
 import wollok.game.*
 
 
@@ -49,11 +50,31 @@ object config{
     })
 }
 
-
     method configurarColisiones() {
     game.onCollideDo(fantasma, {alguien =>
     fantasma.teAtrapa(alguien, personaje)})
 }
 
+    method configurarCaerEnTrampa() {
+    game.onCollideDo(pozo, {alguien =>
+    pozo.teAbsorbe(alguien, personaje)})
+}
 
+}
+
+// Logica para implementar niveles 
+object nivel1{
+    method iniciar() {
+        
+        self.detallesVisuales()
+        config.configurarAcciones()
+        config.configurarColisiones()
+        config.configurarMovimientoFantasma()
+        config.configurarCaerEnTrampa()
+    }
+    method detallesVisuales(){
+        game.addVisual(personaje)
+        game.addVisual(fantasma)
+        game.addVisual(pozo)
+    }
 }

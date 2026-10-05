@@ -18,7 +18,7 @@ object fantasma{
 
     method teAtrapa(alguien, personaje) {
     if (alguien == personaje) {
-       personaje.position(game.origin())
+         personaje.position(game.origin())
     }
     }
 }
