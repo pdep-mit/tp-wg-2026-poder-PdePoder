@@ -1,5 +1,12 @@
 import gameConfiguration.*
 
+object movimientoRandom{
+	method mover(personajeLibre){
+		const x = 0.randomUpTo(game.width()).truncate(0)
+		const y = 0.randomUpTo(game.height()).truncate(0)
+		personajeLibre.position(game.at(x,y))
+	}
+}
 object movimiento{
     method mover(personajeLibre, direccion){
 		const nuevaPosicion = direccion.posicionSiguiente(personajeLibre.position())
