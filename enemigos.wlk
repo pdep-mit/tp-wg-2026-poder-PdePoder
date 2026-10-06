@@ -2,7 +2,7 @@ import movimientos.*
 import personaje.*
 import wollok.game.*
 
-object fantasma{
+class Fantasma{
     var property position = game.at(2,1)
     method image () = "ghost.png"
     var direccion = haciaArriba
@@ -19,6 +19,7 @@ object fantasma{
         game.say(alguien, "Me descontaron 15 de vida")
     }
 }
+const fantasma1 = new Fantasma()
 
 class Serpiente{
     var property position = game.center()

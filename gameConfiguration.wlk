@@ -39,7 +39,7 @@ object config{
     // =========== Tick de los enemigos ==========
     method configurarMovimientoFantasma() {
         game.onTick(500, "moverFantasma", {
-            fantasma.movete()
+            fantasma1.movete()
         })
     }
     method configurarMovimientoSerpiente() {
@@ -51,8 +51,8 @@ object config{
     // =========== Colisiones ==========
     // Cuando el fantasma colisione con el personaje, el fantasma le baja la vida al personaje(una cierta cantidad)¿?
     method configurarColisiones() {
-        game.onCollideDo(fantasma, {alguien => 
-            fantasma.teAtaca(alguien)
+        game.onCollideDo(fantasma1, {alguien => 
+            fantasma1.teAtaca(alguien)
         })
     }
 
@@ -88,7 +88,7 @@ object nivel1{
     method detallesVisuales(){
         game.addVisual(personaje)
         game.addVisual(llave)
-        game.addVisual(fantasma)
+        game.addVisual(fantasma1)
         game.addVisual(pozo)
         game.addVisual(serpiente1)
         game.addVisual(escorpion1)
