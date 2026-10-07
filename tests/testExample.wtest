@@ -1,10 +1,51 @@
 // Archivo de tests de referencia, borrar luego de desarrollar propios
-import example.*
+import personaje.*
+import enemigos.*
+import trampas.*
+import movimientos.*
+import wollok.game.*
 
-describe "groupo de tests" {
+describe "Lionel se enfrenta con los enemigos" {
+  test "El personaje arranca con 100 de vida" {
+    assert.equals(100, personaje.vida())
+  }
+  test "Cuando el fantasma ataca, el personaje pierde 15 de vida" {
+    fantasma1.teAtaca(personaje)
+    assert.equals(85, personaje.vida())
+  }
+  test "Cuando la serpiente ataca, el personaje pierde 10 de vida" {
+    serpiente1.teAtaca(personaje)
+    assert.equals(90, personaje.vida())
+  }
+  test "Cuando el escorpion ataca, el personaje pierde 20 de vida" {
+    escorpion1.teAtaca(personaje)
+    assert.equals(80, personaje.vida())
+  }
+  test "Cuando todos los enemigos atacan, el personaje pierde 45 de vida" {
+    fantasma1.teAtaca(personaje)
+    serpiente1.teAtaca(personaje)
+    escorpion1.teAtaca(personaje)
+    assert.equals(55, personaje.vida())
+  } 
+  test "La serpiente cambia de posicion al moverse" {
+    const posicionInicial = serpiente1.position()
+    serpiente1.movete()
+    assert.notEquals(posicionInicial, serpiente1.position())
+  }
+  test "Cuando el personaje cae en el pozo, vuelve a su posición inicial" {
+    personaje.position(game.at(7,5))
+    pozo.teAbsorbe(personaje)
+    assert.equals(game.origin(), personaje.position())
+  }
+}
 
-  //test "Payer comienza en el centro del tablero" {
-    //assert.equals(game.center(), player.position())
-  //}
-
+describe "Limites de Lionel con el lugar" {
+  test "Si el personaje se mueve para la izquierda queda en la posición (14,0)" {
+    movimiento.mover(personaje, haciaLaIzquierda)
+    assert.equals(game.at(14, 0), personaje.position())
+  }
+  test "Si el personaje intenta bajar desde (0,0) queda en la misma posición" {
+    movimiento.mover(personaje, haciaAbajo)
+    assert.equals(game.origin(), personaje.position())
+  }
 }

@@ -4,10 +4,9 @@
 
 **Integrantes:**
 - Nicole Lujan Condori Cordova
-- Nombre y Apellido
 - Melany Gonzales Rodriguez
-- Nombre y Apellido
-- Nombre y Apellido
+- Franco Duran Sanso
+- Erika Laura Nina Bautista
 
 ## Consignas
 

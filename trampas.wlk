@@ -6,10 +6,8 @@ object pozo{
     var property position = game.at(7,5)
     method image () = "trampa.png"
 
-    method teAbsorbe(pozo, personaje) {
-        if (pozo == personaje) {
+    method teAbsorbe(personaje) {
         personaje.position(game.origin())
-        }
     }
 
 }

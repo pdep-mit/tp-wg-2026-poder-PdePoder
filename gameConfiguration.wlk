@@ -55,7 +55,7 @@ object config {
     // Cuando el pozo colisione con el personaje, lo manda a su posición inicial
     method configurarCaerEnTrampa() {
         game.onCollideDo(pozo, { alguien =>
-            pozo.teAbsorbe(pozo, alguien)
+            pozo.teAbsorbe(alguien)
         })
     }
 
