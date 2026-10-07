@@ -3,6 +3,7 @@ import personaje.*
 import enemigos.*
 import trampas.*
 import movimientos.*
+import pociones.*
 import wollok.game.*
 
 describe "Lionel se enfrenta con los enemigos" {
@@ -48,4 +49,35 @@ describe "Limites de Lionel con el lugar" {
     movimiento.mover(personaje, haciaAbajo)
     assert.equals(game.origin(), personaje.position())
   }
+}
+
+describe "Pociones" {
+
+    test "La pocion energizante aumenta 20 de energia" {
+        const pocion = new PocionEnergizante(position = game.at(1,1))
+        game.addVisual(pocion)
+
+        pocion.interactuar(personaje)
+
+        assert.equals(70, personaje.energia())
+    }
+
+    test "La pocion curativa recupera 20 de vida" {
+        personaje.recibirDanio(30)
+        const pocion = new PocionCurativa(position = game.at(1,1))
+        game.addVisual(pocion)
+
+        pocion.interactuar(personaje)
+
+        assert.equals(90, personaje.vida())
+    }
+
+    test "La pocion venenosa quita 15 de vida" {
+        const pocion = new PocionVenenosa(position = game.at(1,1))
+        game.addVisual(pocion)
+
+        pocion.interactuar(personaje)
+
+        assert.equals(85, personaje.vida())
+    }
 }
