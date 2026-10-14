@@ -5,20 +5,39 @@ object personaje {
     var property energia = 50
     var property position = game.origin()
 
-    method image() = "lionel10.png"
+    method estaMuerto() = vida <= 0
+    method estaVivo() = vida > 0
+
+   method image() = if (self.estaVivo()) "lionel10.png" else "Tumba.png"
 
     method recibirDanio(cantidad) {
-        vida -= cantidad 
+        if (self.estaVivo()) {
+      vida = (vida - cantidad).max(0)
+      if (self.estaMuerto()) {
+        game.say(self, "Game over! Presione R para reiniciar")
+      }
+    }
     }
 
     method curar(cantidad) {
-        vida += cantidad
+        if (self.estaVivo()) {
+            vida = (vida + cantidad).min(100)
+        }
     }
 
     method sumarEnergia(cantidad) {
-        energia += cantidad
+        if (self.estaVivo()) {
+            energia = (energia + cantidad).min(50)
+        }
+    }
+
+    method reiniciar() {
+        vida = 100
+        energia = 50
+        position = game.origin()
     }
 }
+
 
 object llave{
   var property position = game.at(14,8)

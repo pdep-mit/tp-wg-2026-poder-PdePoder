@@ -15,8 +15,8 @@ class Fantasma {
     }
 
     method teAtaca(alguien) {
-        alguien.recibirDanio(15)
-        game.say(alguien, "¡Me descontaron 15 de vida!")
+        alguien.recibirDanio(35)
+        game.say(alguien, "¡Me descontaron 35 de vida!")
     }
 }
 const fantasma1 = new Fantasma()
@@ -30,8 +30,8 @@ class Serpiente {
     }
 
     method teAtaca(alguien) {
-        alguien.recibirDanio(10)
-        game.say(alguien, "¡Una serpiente me atacó (-10 vida)!")
+        alguien.recibirDanio(25)
+        game.say(alguien, "¡Una serpiente me atacó (-25 vida)!")
     }
 }
 
@@ -47,8 +47,8 @@ class Escorpion {
     }
 
     method teAtaca(alguien) {
-        alguien.recibirDanio(20)
-        game.say(alguien, "¡El escorpión me picó (-20 vida)!")
+        alguien.recibirDanio(50)
+        game.say(alguien, "¡El escorpión me picó (-50 vida)!")
     }
 }
 

@@ -23,12 +23,19 @@ object config {
     method configurarAcciones() {
         var personajeControlado = personaje
 
-        keyboard.t().onPressDo({ personajeControlado = personaje })
-        keyboard.up().onPressDo({ movimiento.mover(personajeControlado, haciaArriba) })
-        keyboard.down().onPressDo({ movimiento.mover(personajeControlado, haciaAbajo) })
-        keyboard.left().onPressDo({ movimiento.mover(personajeControlado, haciaLaIzquierda) })
-        keyboard.right().onPressDo({ movimiento.mover(personajeControlado, haciaLaDerecha) })
+    keyboard.t().onPressDo({ personajeControlado = personaje })
+    keyboard.up().onPressDo({ self.moverSiVive(personajeControlado, haciaArriba)})
+    keyboard.down().onPressDo({ self.moverSiVive(personajeControlado, haciaAbajo)})
+    keyboard.left().onPressDo({ self.moverSiVive(personajeControlado, haciaLaIzquierda)})
+    keyboard.right().onPressDo({ self.moverSiVive(personajeControlado, haciaLaDerecha)})
+    keyboard.r().onPressDo({ if (personaje.estaMuerto()) self.reiniciar() })
     }
+
+    method moverSiVive(personajeLibre, direccion) {
+        if (personajeLibre.estaVivo()) {
+            movimiento.mover(personajeLibre, direccion)
+        }
+}
 
     // Aparece una poción aleatoria cada 5 segundos (5000 ms)
     method configurarAparicionPociones() {
@@ -65,6 +72,13 @@ object config {
             alguien.vida(100)
             game.say(alguien, "¡La tengo!")
         })
+    }
+
+    // reinicia el juego
+    method reiniciar() {
+	game.clear()
+	personaje.reiniciar()
+    nivel1.iniciar()
     }
 }
 
