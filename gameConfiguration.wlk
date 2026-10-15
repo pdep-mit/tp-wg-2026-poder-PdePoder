@@ -10,7 +10,7 @@ object config {
     method configurarJuego() {
         game.title("Grupo: PdePoder | La Llave")
         self.configurarDimensiones()
-        nivel1.iniciar()
+       gestorNiveles.iniciarNivelActual()  
     }
 
     method configurarDimensiones() {
@@ -53,7 +53,7 @@ object config {
     }
 
     // =========== Colisión polimórfica con los enemigos ===========
-    method configurarColisiones() {
+method configurarColisiones() {
         game.onCollideDo(personaje, { elemento =>
             elemento.teAtaca(personaje)
         })
@@ -71,23 +71,46 @@ object config {
         game.onCollideDo(llave, { alguien =>
             alguien.vida(100)
             game.say(alguien, "¡La tengo!")
+            gestorNiveles.completarNivel() // Completa el nivel al tomar la llave
         })
     }
 
     // reinicia el juego
     method reiniciar() {
-	game.clear()
-	personaje.reiniciar()
-    nivel1.iniciar()
+        gestorNiveles.iniciarNivelActual() // Reinicia el nivel actual
     }
 }
 
 // Lógica para implementar niveles 
 object nivel1 {
 
-    const enemigos = [fantasma1, serpiente1, escorpion1]
+    const enemigos = [fantasma1, escorpion1]
 
     method iniciar() {    
+        self.detallesVisuales()
+        config.configurarAcciones()
+        config.configurarColisiones()
+        config.configurarMovimientoEnemigos(enemigos)
+        config.configurarTomarLlave()
+        config.configurarAparicionPociones()
+    }
+
+    method detallesVisuales() {
+        game.addVisual(personaje)
+        game.addVisual(llave)
+        
+        // Agregamos todos los enemigos al mapa
+        enemigos.forEach({ enemigo => game.addVisual(enemigo) })
+    }
+}
+
+// Lógica para implementar niveles 
+
+object nivel2 {
+
+    const enemigos = [fantasma1, serpiente1, escorpion1]
+
+    method iniciar() {  
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
@@ -95,6 +118,7 @@ object nivel1 {
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
+        game.say(personaje, "¡Entraste al nivel 2!")
     }
 
     method detallesVisuales() {
@@ -105,4 +129,27 @@ object nivel1 {
         // Agregamos todos los enemigos al mapa
         enemigos.forEach({ enemigo => game.addVisual(enemigo) })
     }
+}
+
+object gestorNiveles {
+    var nivelActual = 1
+
+    method iniciarNivelActual() {
+    game.clear()
+    personaje.reiniciar()    
+    if (nivelActual == 1) {
+        nivel1.iniciar()
+    }
+     if (nivelActual == 2) {
+        nivel2.iniciar()
+    }
+}
+
+method completarNivel() {
+    game.say(personaje, "¡Nivel completado!")
+    nivelActual = nivelActual + 1   
+    self.iniciarNivelActual()
+}
+
+ 
 }
