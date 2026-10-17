@@ -102,6 +102,8 @@ object nivel1 {
         // Agregamos todos los enemigos al mapa
         enemigos.forEach({ enemigo => game.addVisual(enemigo) })
     }
+
+    method completar() { gestorNiveles.siguienteNivel() } 
 }
 
 // Lógica para implementar niveles 
@@ -129,27 +131,73 @@ object nivel2 {
         // Agregamos todos los enemigos al mapa
         enemigos.forEach({ enemigo => game.addVisual(enemigo) })
     }
+
+
+    method completar() { gestorNiveles.siguienteNivel() }  
+}
+
+object nivel3 {
+
+    const enemigos = [fantasma1, serpiente1, escorpion1]
+
+    method iniciar() {  
+        self.detallesVisuales()
+        config.configurarAcciones()
+        config.configurarColisiones()
+        config.configurarMovimientoEnemigos(enemigos)
+        config.configurarCaerEnTrampa()
+        config.configurarTomarLlave()
+        config.configurarAparicionPociones()
+        game.say(personaje, "¡Entraste al nivel 3!")
+    }
+
+    method detallesVisuales() {
+        game.addVisual(personaje)
+        game.addVisual(llave)
+        game.addVisual(pozo)
+        
+        // Agregamos todos los enemigos al mapa
+        enemigos.forEach({ enemigo => game.addVisual(enemigo) })
+    }
+
+    method completar() { gestorNiveles.finDelJuego() }  
+}
+
+
+
+object finAnimacion {
+    var frame = 0
+    const frames = ["F1.png", "F2.png", "F3.png", "F4.png", "F5.png", "F6.png", "F7.png", "F8.png", "F9.png", "F10.png", "F11.png", "F12.png", "F13.png", "F14.png", "F15.png", "F16.png", "F17.png", "F18.png"]
+   
+    method position() = game.origin()
+    method image() = frames.get(frame)
+    method animar() { frame = (frame + 1) % frames.size() }
 }
 
 object gestorNiveles {
-    var nivelActual = 1
+    var nivelActual = 0
+    const niveles = [nivel1, nivel2, nivel3]
 
     method iniciarNivelActual() {
-    game.clear()
-    personaje.reiniciar()    
-    if (nivelActual == 1) {
-        nivel1.iniciar()
+        game.clear()
+        personaje.reiniciar()
+        niveles.get(nivelActual).iniciar()
     }
-     if (nivelActual == 2) {
-        nivel2.iniciar()
+
+    method finDelJuego() {
+        game.clear()
+        game.addVisual(finAnimacion)
+        game.onTick(200, "animarFin", { finAnimacion.animar() })
+        game.say(finAnimacion, "¡Completaste el juego! Presioná R para reiniciar")
+        keyboard.r().onPressDo({
+        nivelActual = 0
+        self.iniciarNivelActual()})
     }
-}
 
-method completarNivel() {
-    game.say(personaje, "¡Nivel completado!")
-    nivelActual = nivelActual + 1   
-    self.iniciarNivelActual()
-}
+    method completarNivel() { niveles.get(nivelActual).completar() }
 
- 
+    method siguienteNivel() {
+        nivelActual += 1
+        self.iniciarNivelActual()
+    }
 }
