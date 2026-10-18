@@ -74,12 +74,13 @@ object config {
         })
     }
 
+    // Reinicia siempre devolviendo al jugador al Nivel 1
     method reiniciar() {
-        gestorNiveles.iniciarNivelActual()
+        gestorNiveles.reiniciarAlNivelUno()
     }
 }
 
-// ================= NIVELES REDISEÑADOS =================
+// ================= NIVELES =================
 
 object nivel1 {
     const enemigosComunes = [fantasma1, fantasma2, escorpion1]
@@ -223,14 +224,18 @@ object gestorNiveles {
         niveles.get(nivelActual).iniciar()
     }
 
+    method reiniciarAlNivelUno() {
+        nivelActual = 0
+        self.iniciarNivelActual()
+    }
+
     method finDelJuego() {
         game.clear()
         game.addVisual(finAnimacion)
         game.onTick(200, "animarFin", { finAnimacion.animar() })
         game.say(finAnimacion, "¡Completaste el juego! Presioná R para reiniciar")
         keyboard.r().onPressDo({
-            nivelActual = 0
-            self.iniciarNivelActual()
+            self.reiniciarAlNivelUno()
         })
     }
 
