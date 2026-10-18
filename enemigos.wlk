@@ -19,6 +19,7 @@ class Fantasma {
         game.say(alguien, "¡Me descontaron 35 de vida!")
     }
 }
+
 const fantasma1 = new Fantasma()
 
 class Serpiente {
@@ -26,6 +27,7 @@ class Serpiente {
     method image() = "snakee.png"
 
     method movete() {
+        // Ahora se mueve 1 casillero hacia una dirección aleatoria
         movimientoRandom.mover(self)
     }
 
@@ -42,7 +44,6 @@ class Escorpion {
     method image() = "scorpion.png"
 
     method movete() {
-        // Ejemplo de movimiento para el escorpión
         movimiento.mover(self, haciaLaIzquierda)
     }
 

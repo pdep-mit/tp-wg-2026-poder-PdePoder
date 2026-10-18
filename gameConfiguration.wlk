@@ -10,34 +10,32 @@ object config {
     method configurarJuego() {
         game.title("Grupo: PdePoder | La Llave")
         self.configurarDimensiones()
-       gestorNiveles.iniciarNivelActual()  
+        gestorNiveles.iniciarNivelActual()  
     }
 
     method configurarDimensiones() {
         game.height(10)
         game.width(15)
-        // game.cellSize(64)
         game.boardGround("fondo1015.png")
     }
 
     method configurarAcciones() {
         var personajeControlado = personaje
 
-    keyboard.t().onPressDo({ personajeControlado = personaje })
-    keyboard.up().onPressDo({ self.moverSiVive(personajeControlado, haciaArriba)})
-    keyboard.down().onPressDo({ self.moverSiVive(personajeControlado, haciaAbajo)})
-    keyboard.left().onPressDo({ self.moverSiVive(personajeControlado, haciaLaIzquierda)})
-    keyboard.right().onPressDo({ self.moverSiVive(personajeControlado, haciaLaDerecha)})
-    keyboard.r().onPressDo({ if (personaje.estaMuerto()) self.reiniciar() })
+        keyboard.t().onPressDo({ personajeControlado = personaje })
+        keyboard.up().onPressDo({ self.moverSiVive(personajeControlado, haciaArriba) })
+        keyboard.down().onPressDo({ self.moverSiVive(personajeControlado, haciaAbajo) })
+        keyboard.left().onPressDo({ self.moverSiVive(personajeControlado, haciaLaIzquierda) })
+        keyboard.right().onPressDo({ self.moverSiVive(personajeControlado, haciaLaDerecha) })
+        keyboard.r().onPressDo({ if (personaje.estaMuerto()) self.reiniciar() })
     }
 
     method moverSiVive(personajeLibre, direccion) {
         if (personajeLibre.estaVivo()) {
             movimiento.mover(personajeLibre, direccion)
         }
-}
+    }
 
-    // Aparece una poción aleatoria cada 5 segundos (5000 ms)
     method configurarAparicionPociones() {
         game.onTick(5000, "aparecerPocion", {
             const nuevaPocion = generadorPociones.crearPocionAleatoria()
@@ -45,52 +43,55 @@ object config {
         })
     }
 
-    // =========== Tick polimórfico para mover a los enemigos ===========
+    // Movimiento regular para enemigos comunes (Fantasma y Escorpión)
     method configurarMovimientoEnemigos(enemigos) {
-        game.onTick(1000, "moverEnemigos", {
+        game.onTick(800, "moverEnemigos", {
             enemigos.forEach({ enemigo => enemigo.movete() })
         })
     }
 
-    // =========== Colisión polimórfica con los enemigos ===========
-method configurarColisiones() {
+    // Movimiento rápido exclusivo para la Serpiente
+    method configurarMovimientoSerpiente(serpiente) {
+        game.onTick(350, "moverSerpiente", {
+            serpiente.movete()
+        })
+    }
+
+    method configurarColisiones() {
         game.onCollideDo(personaje, { elemento =>
             elemento.teAtaca(personaje)
         })
     }
 
-    // Cuando el pozo colisione con el personaje, lo manda a su posición inicial
     method configurarCaerEnTrampa() {
         game.onCollideDo(pozo, { alguien =>
             pozo.teAbsorbe(alguien)
         })
     }
 
-    // Cuando la llave colisione con el personaje
     method configurarTomarLlave() {
         game.onCollideDo(llave, { alguien =>
             alguien.vida(100)
             game.say(alguien, "¡La tengo!")
-            gestorNiveles.completarNivel() // Completa el nivel al tomar la llave
+            gestorNiveles.completarNivel()
         })
     }
 
-    // reinicia el juego
     method reiniciar() {
-        gestorNiveles.iniciarNivelActual() // Reinicia el nivel actual
+        gestorNiveles.iniciarNivelActual()
     }
 }
 
-// Lógica para implementar niveles 
-object nivel1 {
+// ================= NIVELES =================
 
-    const enemigos = [fantasma1, escorpion1]
+object nivel1 {
+    const enemigosComunes = [fantasma1, escorpion1]
 
     method iniciar() {    
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
-        config.configurarMovimientoEnemigos(enemigos)
+        config.configurarMovimientoEnemigos(enemigosComunes)
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
     }
@@ -99,24 +100,25 @@ object nivel1 {
         game.addVisual(personaje)
         game.addVisual(llave)
         
-        // Agregamos todos los enemigos al mapa
-        enemigos.forEach({ enemigo => game.addVisual(enemigo) })
+        // Interfaz visual (HUD): el ícono primero, luego el contador para superponerlo
+        game.addVisual(iconoVida)
+        game.addVisual(contadorVida)
+
+        enemigosComunes.forEach({ enemigo => game.addVisual(enemigo) })
     }
 
     method completar() { gestorNiveles.siguienteNivel() } 
 }
 
-// Lógica para implementar niveles 
-
 object nivel2 {
-
-    const enemigos = [fantasma1, serpiente1, escorpion1]
+    const enemigosComunes = [fantasma1, escorpion1]
 
     method iniciar() {  
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
-        config.configurarMovimientoEnemigos(enemigos)
+        config.configurarMovimientoEnemigos(enemigosComunes)
+        config.configurarMovimientoSerpiente(serpiente1)
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
@@ -127,24 +129,27 @@ object nivel2 {
         game.addVisual(personaje)
         game.addVisual(llave)
         game.addVisual(pozo)
-        
-        // Agregamos todos los enemigos al mapa
-        enemigos.forEach({ enemigo => game.addVisual(enemigo) })
-    }
 
+        // Interfaz visual (HUD): primero corazón, luego texto centrado arriba
+        game.addVisual(iconoVida)
+        game.addVisual(contadorVida)
+        
+        enemigosComunes.forEach({ enemigo => game.addVisual(enemigo) })
+        game.addVisual(serpiente1)
+    }
 
     method completar() { gestorNiveles.siguienteNivel() }  
 }
 
 object nivel3 {
-
-    const enemigos = [fantasma1, serpiente1, escorpion1]
+    const enemigosComunes = [fantasma1, escorpion1]
 
     method iniciar() {  
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
-        config.configurarMovimientoEnemigos(enemigos)
+        config.configurarMovimientoEnemigos(enemigosComunes)
+        config.configurarMovimientoSerpiente(serpiente1)
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
@@ -155,15 +160,19 @@ object nivel3 {
         game.addVisual(personaje)
         game.addVisual(llave)
         game.addVisual(pozo)
+
+        // Interfaz visual (HUD): primero corazón, luego texto centrado arriba
+        game.addVisual(iconoVida)
+        game.addVisual(contadorVida)
         
-        // Agregamos todos los enemigos al mapa
-        enemigos.forEach({ enemigo => game.addVisual(enemigo) })
+        enemigosComunes.forEach({ enemigo => game.addVisual(enemigo) })
+        game.addVisual(serpiente1)
     }
 
     method completar() { gestorNiveles.finDelJuego() }  
 }
 
-
+// ================= GESTOR DE NIVELES Y ANIMACIÓN =================
 
 object finAnimacion {
     var frame = 0
@@ -190,8 +199,9 @@ object gestorNiveles {
         game.onTick(200, "animarFin", { finAnimacion.animar() })
         game.say(finAnimacion, "¡Completaste el juego! Presioná R para reiniciar")
         keyboard.r().onPressDo({
-        nivelActual = 0
-        self.iniciarNivelActual()})
+            nivelActual = 0
+            self.iniciarNivelActual()
+        })
     }
 
     method completarNivel() { niveles.get(nivelActual).completar() }
