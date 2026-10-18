@@ -48,9 +48,9 @@ object config {
         })
     }
 
-    method configurarMovimientoSerpiente(serpiente) {
+    method configurarMovimientoSerpientes(serpientes) {
         game.onTick(350, "moverSerpiente", {
-            serpiente.movete()
+            serpientes.forEach({ serpiente => serpiente.movete() })
         })
     }
 
@@ -79,29 +79,38 @@ object config {
     }
 }
 
-// ================= NIVELES =================
+// ================= NIVELES REDISEÑADOS =================
 
 object nivel1 {
-    const enemigosComunes = [fantasma1, escorpion1]
+    const enemigosComunes = [fantasma1, fantasma2, escorpion1]
+    const trampas = [trampaOso1]
 
     method iniciar() {    
         generadorPociones.reiniciar()
+        
+        // Posiciones iniciales
+        fantasma1.position(game.at(3, 1))
+        fantasma2.position(game.at(10, 1))
+        escorpion1.position(game.at(10, 4))
+
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
         config.configurarMovimientoEnemigos(enemigosComunes)
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
+        game.say(personaje, "¡Nivel 1: Evitá las trampas y enemigos!")
     }
 
     method detallesVisuales() {
         game.addVisual(personaje)
         game.addVisual(llave)
         
-        // Interfaz visual (HUD)
+        // HUD
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
 
+        trampas.forEach({ trampa => game.addVisual(trampa) })
         enemigosComunes.forEach({ enemigo => game.addVisual(enemigo) })
     }
 
@@ -109,70 +118,84 @@ object nivel1 {
 }
 
 object nivel2 {
-    const enemigosComunes = [fantasma1, escorpion1]
+    const enemigosComunes = [fantasma1, escorpion1, escorpion2]
+    const serpientes = [serpiente1]
+    const trampas = [pozo, trampaOso1]
 
     method iniciar() {  
         generadorPociones.reiniciar()
+
+        // Reset de posiciones
+        fantasma1.position(game.at(5, 1))
+        escorpion1.position(game.at(10, 3))
+        escorpion2.position(game.at(2, 7))
         serpiente1.position(game.at(13, 8))
         
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
         config.configurarMovimientoEnemigos(enemigosComunes)
-        config.configurarMovimientoSerpiente(serpiente1)
+        config.configurarMovimientoSerpientes(serpientes)
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje, "¡Entraste al nivel 2!")
+        game.say(personaje, "¡Nivel 2: Cuidado con la serpiente!")
     }
 
     method detallesVisuales() {
         game.addVisual(personaje)
         game.addVisual(llave)
-        game.addVisual(pozo)
-        game.addVisual(trampaOso) // Trampa para osos agregada al nivel 2
 
-        // Interfaz visual (HUD)
+        // HUD
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
-        
+
+        trampas.forEach({ trampa => game.addVisual(trampa) })
         enemigosComunes.forEach({ enemigo => game.addVisual(enemigo) })
-        game.addVisual(serpiente1)
+        serpientes.forEach({ serpiente => game.addVisual(serpiente) })
     }
 
     method completar() { gestorNiveles.siguienteNivel() }  
 }
 
 object nivel3 {
-    const enemigosComunes = [fantasma1, escorpion1]
+    const enemigosComunes = [fantasma1, fantasma2, escorpion1, escorpion2]
+    const serpientes = [serpiente1, serpiente2]
+    const trampas = [pozo, trampaOso1, trampaOso2]
 
     method iniciar() {  
         generadorPociones.reiniciar()
+
+        // Reset de posiciones extremas
+        fantasma1.position(game.at(4, 1))
+        fantasma2.position(game.at(8, 1))
+        escorpion1.position(game.at(12, 2))
+        escorpion2.position(game.at(2, 6))
         serpiente1.position(game.at(13, 8))
+        serpiente2.position(game.at(1, 8))
 
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
         config.configurarMovimientoEnemigos(enemigosComunes)
-        config.configurarMovimientoSerpiente(serpiente1)
+        config.configurarMovimientoSerpientes(serpientes)
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje, "¡Entraste al nivel 3!")
+        game.say(personaje, "¡Nivel Final: Desafío Extremo!")
     }
 
     method detallesVisuales() {
         game.addVisual(personaje)
         game.addVisual(llave)
-        game.addVisual(pozo)
-        game.addVisual(trampaOso) // Trampa para osos agregada al nivel 3
 
-        // Interfaz visual (HUD)
+        // HUD
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
-        
+
+        trampas.forEach({ trampa => game.addVisual(trampa) })
         enemigosComunes.forEach({ enemigo => game.addVisual(enemigo) })
-        game.addVisual(serpiente1)
+        serpientes.forEach({ serpiente => game.addVisual(serpiente) })
     }
 
     method completar() { gestorNiveles.finDelJuego() }  

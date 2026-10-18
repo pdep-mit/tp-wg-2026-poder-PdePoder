@@ -20,7 +20,9 @@ class Fantasma {
     }
 }
 
-const fantasma1 = new Fantasma()
+// Instancias predefinidas para fantasmas
+const fantasma1 = new Fantasma(position = game.at(3, 1))
+const fantasma2 = new Fantasma(position = game.at(10, 1))
 
 class Serpiente {
     var property position = game.at(13, 8)
@@ -36,17 +38,18 @@ class Serpiente {
     }
 }
 
-const serpiente1 = new Serpiente()
+// Instancias predefinidas para serpientes
+const serpiente1 = new Serpiente(position = game.at(13, 8))
+const serpiente2 = new Serpiente(position = game.at(1, 8))
 
 class Escorpion {
     var property position = game.at(10, 4)
     method image() = "scorpion.png"
-    var direccion = haciaLaIzquierda // Dirección inicial
+    var direccion = haciaLaIzquierda
 
     method movete() {
         movimiento.mover(self, direccion)
 
-        // Rebota horizontalmente al llegar a los bordes del mapa
         if (position.x() == 0) direccion = haciaLaDerecha
         if (position.x() == 14) direccion = haciaLaIzquierda
     }
@@ -57,4 +60,6 @@ class Escorpion {
     }
 }
 
-const escorpion1 = new Escorpion()
+// Instancias predefinidas para escorpiones
+const escorpion1 = new Escorpion(position = game.at(10, 3))
+const escorpion2 = new Escorpion(position = game.at(2, 7))
