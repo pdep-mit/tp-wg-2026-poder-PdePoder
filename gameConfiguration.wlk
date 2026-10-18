@@ -36,7 +36,6 @@ object config {
         }
     }
 
-    // Intenta generar una poción cada 5 segundos respetando el límite máximo de 4
     method configurarAparicionPociones() {
         game.onTick(5000, "aparecerPocion", {
             generadorPociones.intentarGenerarPocion()
@@ -131,6 +130,7 @@ object nivel2 {
         game.addVisual(personaje)
         game.addVisual(llave)
         game.addVisual(pozo)
+        game.addVisual(trampaOso) // Trampa para osos agregada al nivel 2
 
         // Interfaz visual (HUD)
         game.addVisual(iconoVida)
@@ -165,6 +165,7 @@ object nivel3 {
         game.addVisual(personaje)
         game.addVisual(llave)
         game.addVisual(pozo)
+        game.addVisual(trampaOso) // Trampa para osos agregada al nivel 3
 
         // Interfaz visual (HUD)
         game.addVisual(iconoVida)
