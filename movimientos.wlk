@@ -4,7 +4,6 @@ object movimientoRandom {
     const direcciones = [haciaArriba, haciaAbajo, haciaLaIzquierda, haciaLaDerecha]
 
     method mover(personajeLibre) {
-        // Selecciona una dirección aleatoria de la lista y mueve 1 casillero
         const direccionElegida = direcciones.anyOne()
         movimiento.mover(personajeLibre, direccionElegida)
     }
@@ -34,13 +33,15 @@ object haciaAbajo {
 object haciaLaDerecha {
     method posicionSiguiente(posicion) { 
         const nuevaPosicion = posicion.right(1)
-        return if (nuevaPosicion.x() <= 14) nuevaPosicion else posicion.left(14)
+        // Límite en x = 14: si intenta avanzar más allá, se queda en la misma posición
+        return if (nuevaPosicion.x() <= 14) nuevaPosicion else posicion
     }
 }
 
 object haciaLaIzquierda {
     method posicionSiguiente(posicion) {
         const nuevaPosicion = posicion.left(1)
-        return if (nuevaPosicion.x() >= 0) nuevaPosicion else posicion.right(14)
+        // Límite en x = 0: si intenta avanzar más a la izquierda, se queda en la misma posición
+        return if (nuevaPosicion.x() >= 0) nuevaPosicion else posicion
     }	
 }

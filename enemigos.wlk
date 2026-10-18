@@ -23,11 +23,10 @@ class Fantasma {
 const fantasma1 = new Fantasma()
 
 class Serpiente {
-    var property position = game.center()
+    var property position = game.at(13, 8)
     method image() = "snakee.png"
 
     method movete() {
-        // Ahora se mueve 1 casillero hacia una dirección aleatoria
         movimientoRandom.mover(self)
     }
 
@@ -42,9 +41,14 @@ const serpiente1 = new Serpiente()
 class Escorpion {
     var property position = game.at(10, 4)
     method image() = "scorpion.png"
+    var direccion = haciaLaIzquierda // Dirección inicial
 
     method movete() {
-        movimiento.mover(self, haciaLaIzquierda)
+        movimiento.mover(self, direccion)
+
+        // Rebota horizontalmente al llegar a los bordes del mapa
+        if (position.x() == 0) direccion = haciaLaDerecha
+        if (position.x() == 14) direccion = haciaLaIzquierda
     }
 
     method teAtaca(alguien) {

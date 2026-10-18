@@ -36,21 +36,19 @@ object config {
         }
     }
 
+    // Intenta generar una poción cada 5 segundos respetando el límite máximo de 4
     method configurarAparicionPociones() {
         game.onTick(5000, "aparecerPocion", {
-            const nuevaPocion = generadorPociones.crearPocionAleatoria()
-            game.addVisual(nuevaPocion)
+            generadorPociones.intentarGenerarPocion()
         })
     }
 
-    // Movimiento regular para enemigos comunes (Fantasma y Escorpión)
     method configurarMovimientoEnemigos(enemigos) {
-        game.onTick(800, "moverEnemigos", {
+        game.onTick(400, "moverEnemigos", {
             enemigos.forEach({ enemigo => enemigo.movete() })
         })
     }
 
-    // Movimiento rápido exclusivo para la Serpiente
     method configurarMovimientoSerpiente(serpiente) {
         game.onTick(350, "moverSerpiente", {
             serpiente.movete()
@@ -88,6 +86,7 @@ object nivel1 {
     const enemigosComunes = [fantasma1, escorpion1]
 
     method iniciar() {    
+        generadorPociones.reiniciar()
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
@@ -100,7 +99,7 @@ object nivel1 {
         game.addVisual(personaje)
         game.addVisual(llave)
         
-        // Interfaz visual (HUD): el ícono primero, luego el contador para superponerlo
+        // Interfaz visual (HUD)
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
 
@@ -114,6 +113,9 @@ object nivel2 {
     const enemigosComunes = [fantasma1, escorpion1]
 
     method iniciar() {  
+        generadorPociones.reiniciar()
+        serpiente1.position(game.at(13, 8))
+        
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
@@ -130,7 +132,7 @@ object nivel2 {
         game.addVisual(llave)
         game.addVisual(pozo)
 
-        // Interfaz visual (HUD): primero corazón, luego texto centrado arriba
+        // Interfaz visual (HUD)
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
         
@@ -145,6 +147,9 @@ object nivel3 {
     const enemigosComunes = [fantasma1, escorpion1]
 
     method iniciar() {  
+        generadorPociones.reiniciar()
+        serpiente1.position(game.at(13, 8))
+
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
@@ -161,7 +166,7 @@ object nivel3 {
         game.addVisual(llave)
         game.addVisual(pozo)
 
-        // Interfaz visual (HUD): primero corazón, luego texto centrado arriba
+        // Interfaz visual (HUD)
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
         
@@ -190,6 +195,7 @@ object gestorNiveles {
     method iniciarNivelActual() {
         game.clear()
         personaje.reiniciar()
+        generadorPociones.reiniciar()
         niveles.get(nivelActual).iniciar()
     }
 
