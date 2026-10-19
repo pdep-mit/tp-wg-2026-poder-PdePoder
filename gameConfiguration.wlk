@@ -9,8 +9,29 @@ object config {
 
     method configurarJuego() {
         game.title("Grupo: PdePoder | La Llave")
-        self.configurarDimensiones()
-        gestorNiveles.iniciarNivelActual()  
+        //self.configurarDimensiones()
+        //gestorNiveles.iniciarNivelActual()  
+        self.configuracionMenu()
+        self.mostrarMenu()
+    }
+
+    method configuracionMenu(){
+        game.height(10)
+        game.width(15)
+    }
+    method mostrarMenu() {
+        game.clear()
+        game.addVisual(menu)
+
+        keyboard.i().onPressDo({ self.mostrarInstrucciones() })
+
+        keyboard.enter().onPressDo({ gestorNiveles.mostrarPresentacionNivel() })
+    }
+
+    method mostrarInstrucciones() {
+        game.clear()
+        game.addVisual(instrucciones)
+        keyboard.v().onPressDo({ self.mostrarMenu() })
     }
 
     method configurarDimensiones() {
@@ -99,7 +120,7 @@ object nivel1 {
         config.configurarMovimientoEnemigos(enemigosComunes)
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje, "¡Nivel 1: Evitá las trampas y enemigos!")
+        game.say(personaje,"¡Nivel 1: Evitá las trampas y enemigos!")
     }
 
     method detallesVisuales() {
@@ -139,7 +160,7 @@ object nivel2 {
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje, "¡Nivel 2: Cuidado con la serpiente!")
+        game.say(personaje,"¡Nivel 2: Cuidado con la serpiente!")
     }
 
     method detallesVisuales() {
@@ -182,7 +203,7 @@ object nivel3 {
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje, "¡Nivel Final: Desafío Extremo!")
+        game.say(personaje,"¡Nivel Final: Desafío Extremo!")
     }
 
     method detallesVisuales() {
@@ -212,15 +233,46 @@ object finAnimacion {
     method animar() { frame = (frame + 1) % frames.size() }
 }
 
+object menu {
+    method position() = game.origin()
+    method image() = "menuP.png"
+}
+
+object instrucciones {
+    method position() = game.origin()
+    //method image() = "instrucciones.png"
+}
+object presentacionNivel1 {
+    method position() = game.origin()
+    method image() = "pNivel1.png"
+}
+
+object presentacionNivel2 {
+    method position() = game.origin()
+    method image() = "pNivel2.png"
+}
+
+object presentacionNivel3 {
+    method position() = game.origin()
+    method image() = "pNivel3.png"
+}
 object gestorNiveles {
     var nivelActual = 0
     const niveles = [nivel1, nivel2, nivel3]
-
+    const presentaciones = [presentacionNivel1, presentacionNivel2, presentacionNivel3]
     method iniciarNivelActual() {
         game.clear()
+        config.configurarDimensiones()
         personaje.reiniciar()
         generadorPociones.reiniciar()
         niveles.get(nivelActual).iniciar()
+    }
+
+    method mostrarPresentacionNivel() {
+        game.clear()
+        config.configuracionMenu()
+        game.addVisual(presentaciones.get(nivelActual))
+        keyboard.enter().onPressDo({ self.iniciarNivelActual() })
     }
 
     method finDelJuego() {
@@ -230,7 +282,7 @@ object gestorNiveles {
         game.say(finAnimacion, "¡Completaste el juego! Presioná R para reiniciar")
         keyboard.r().onPressDo({
             nivelActual = 0
-            self.iniciarNivelActual()
+            self.mostrarPresentacionNivel()
         })
     }
 
@@ -238,6 +290,6 @@ object gestorNiveles {
 
     method siguienteNivel() {
         nivelActual += 1
-        self.iniciarNivelActual()
+        self.mostrarPresentacionNivel()
     }
 }
