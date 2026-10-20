@@ -87,13 +87,11 @@ object config {
         })
     }
 
-    method configurarTomarLlave() {
-        game.onCollideDo(llave, { alguien =>
-            alguien.vida(100)
-            game.say(alguien, "¡La tengo!")
-            gestorNiveles.completarNivel()
-        })
-    }
+    //method configurarTomarLlave() {
+    //    game.onCollideDo(llave, { alguien =>
+    //        alguien.agarrarLaLlave()
+    //    })
+    //}
 
     method reiniciar() {
         gestorNiveles.iniciarNivelActual()
@@ -118,7 +116,7 @@ object nivel1 {
         config.configurarAcciones()
         config.configurarColisiones()
         config.configurarMovimientoEnemigos(enemigosComunes)
-        config.configurarTomarLlave()
+        //config.configurarTomarLlave()
         config.configurarAparicionPociones()
         game.say(personaje,"¡Nivel 1: Evitá las trampas y enemigos!")
     }
@@ -158,7 +156,7 @@ object nivel2 {
         config.configurarMovimientoEnemigos(enemigosComunes)
         config.configurarMovimientoSerpientes(serpientes)
         config.configurarCaerEnTrampa()
-        config.configurarTomarLlave()
+        //config.configurarTomarLlave()
         config.configurarAparicionPociones()
         game.say(personaje,"¡Nivel 2: Cuidado con la serpiente!")
     }
@@ -201,7 +199,7 @@ object nivel3 {
         config.configurarMovimientoEnemigos(enemigosComunes)
         config.configurarMovimientoSerpientes(serpientes)
         config.configurarCaerEnTrampa()
-        config.configurarTomarLlave()
+        //config.configurarTomarLlave()
         config.configurarAparicionPociones()
         game.say(personaje,"¡Nivel Final: Desafío Extremo!")
     }

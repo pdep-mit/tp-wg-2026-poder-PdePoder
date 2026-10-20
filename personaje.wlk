@@ -1,5 +1,5 @@
 import wollok.game.*
-
+import gameConfiguration.*
 object personaje {
     var property vida = 100
     var property energia = 50
@@ -36,6 +36,10 @@ object personaje {
         energia = 50
         position = game.origin()
     }
+
+    method agarrarLaLlave() {
+        gestorNiveles.completarNivel()
+    }
 }
 
 // Visual para el ícono de corazón/vida
@@ -53,4 +57,7 @@ object contadorVida {
 object llave {
     var property position = game.at(14, 8)
     method image() = "llave.png"
+    method teAtaca(alguien){
+        alguien.agarrarLaLlave()
+    }
 }

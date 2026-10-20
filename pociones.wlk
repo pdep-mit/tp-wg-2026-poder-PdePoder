@@ -1,56 +1,54 @@
 import wollok.game.*
 
-class PocionEnergizante {
+class Pocion {
     var property position
+
+    method teAtaca(alguien) {
+        self.interactuar(alguien)
+    }
+    method interactuar(alguien) {
+        self.stock()
+    }
+
+    method stock() {
+        generadorPociones.removerPocion(self) // Notifica al generador para liberar cupo
+        game.removeVisual(self) 
+    }
+}
+
+class PocionEnergizante inherits Pocion {
 
     method image() = "pocion_verde.png"
 
-    method interactuar(alguien) {
+    override method interactuar(alguien) {
         alguien.sumarEnergia(20)
         game.say(alguien, "¡+20 de Energía!")
-        generadorPociones.removerPocion(self) // Notifica al generador para liberar cupo
-        game.removeVisual(self)
-    }
-
-    method teAtaca(alguien) {
-        self.interactuar(alguien)
+        super(alguien)
     }
 }
 
-class PocionCurativa {
-    var property position
+class PocionCurativa inherits Pocion {
 
     method image() = "pocion_roja.png"
 
-    method interactuar(alguien) {
+    override method interactuar(alguien) {
         alguien.curar(20)
         game.say(alguien, "¡+20 de Vida!")
-        generadorPociones.removerPocion(self) // Notifica al generador para liberar cupo
-        game.removeVisual(self)
-    }
-
-    method teAtaca(alguien) {
-        self.interactuar(alguien)
+        super(alguien)
+        
     }
 }
 
-class PocionVenenosa {
-    var property position
+class PocionVenenosa inherits Pocion {
 
     method image() = "pocion_morada.png"
 
-    method interactuar(alguien) {
+    override method interactuar(alguien) {
         alguien.recibirDanio(15)
-        game.say(alguien, "¡Poción venenosa! -15 de Vida")
-        generadorPociones.removerPocion(self) // Notifica al generador para liberar cupo
-        game.removeVisual(self)
-    }
-
-    method teAtaca(alguien) {
-        self.interactuar(alguien)
+        game.say(alguien, "¡-15 de Vida!")
+        super(alguien)
     }
 }
-
 // Objeto generador de pociones con límite máximo de 4 en pantalla
 object generadorPociones {
     const pocionesActivas = [] // Lista para llevar el control de cuántas hay en pantalla
