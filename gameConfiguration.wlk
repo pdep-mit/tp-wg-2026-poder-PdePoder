@@ -9,35 +9,14 @@ object config {
 
     method configurarJuego() {
         game.title("Grupo: PdePoder | La Llave")
-        //self.configurarDimensiones()
-        //gestorNiveles.iniciarNivelActual()  
-        self.configuracionMenu()
-        self.mostrarMenu()
-    }
-
-    method configuracionMenu(){
-        game.height(10)
-        game.width(15)
-    }
-    method mostrarMenu() {
-        game.clear()
-        game.addVisual(menu)
-
-        keyboard.i().onPressDo({ self.mostrarInstrucciones() })
-
-        keyboard.enter().onPressDo({ gestorNiveles.mostrarPresentacionNivel() })
-    }
-
-    method mostrarInstrucciones() {
-        game.clear()
-        game.addVisual(instrucciones)
-        keyboard.v().onPressDo({ self.mostrarMenu() })
+        self.configurarDimensiones()
+        gestorNiveles.iniciarNivelActual()  
     }
 
     method configurarDimensiones() {
         game.height(10)
         game.width(15)
-        //game.boardGround("fondo1015.png")
+        game.boardGround("fondo1015.png")
     }
 
     method configurarAcciones() {
@@ -231,48 +210,16 @@ object finAnimacion {
     method animar() { frame = (frame + 1) % frames.size() }
 }
 
-object menu {
-    method position() = game.origin()
-    method image() = "menuP.png"
-}
-
-object instrucciones {
-    method position() = game.origin()
-    //method image() = "instrucciones.png"
-}
-object presentacionNivel1 {
-    method position() = game.origin()
-    method image() = "pNivel1.png"
-}
-
-object presentacionNivel2 {
-    method position() = game.origin()
-    method image() = "pNivel2.png"
-}
-
-object presentacionNivel3 {
-    method position() = game.origin()
-    method image() = "pNivel3.png"
-}
 object gestorNiveles {
     var nivelActual = 0
     const niveles = [nivel1, nivel2, nivel3]
-    const presentaciones = [presentacionNivel1, presentacionNivel2, presentacionNivel3]
     method iniciarNivelActual() {
         game.clear()
-        config.configurarDimensiones()
-        game.addVisual(fondo)
         personaje.reiniciar()
         generadorPociones.reiniciar()
         niveles.get(nivelActual).iniciar()
     }
 
-    method mostrarPresentacionNivel() {
-        game.clear()
-        config.configuracionMenu()
-        game.addVisual(presentaciones.get(nivelActual))
-        keyboard.enter().onPressDo({ self.iniciarNivelActual() })
-    }
 
     method finDelJuego() {
         game.clear()
@@ -281,7 +228,7 @@ object gestorNiveles {
         game.say(finAnimacion, "¡Completaste el juego! Presioná R para reiniciar")
         keyboard.r().onPressDo({
             nivelActual = 0
-            self.mostrarPresentacionNivel()
+            self.iniciarNivelActual()
         })
     }
 
@@ -289,13 +236,6 @@ object gestorNiveles {
 
     method siguienteNivel() {
         nivelActual += 1
-        self.mostrarPresentacionNivel()
+        self.iniciarNivelActual()
     }
-}
-
-//consultar si esta bien el uso de fondo como object y no como boardground
-object fondo {
-    method position() = game.origin()
-    method image() = "fondo1015.png"
-    method teAtaca(alguien){}
 }
