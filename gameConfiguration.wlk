@@ -37,7 +37,7 @@ object config {
     method configurarDimensiones() {
         game.height(10)
         game.width(15)
-        game.boardGround("fondo1015.png")
+        //game.boardGround("fondo1015.png")
     }
 
     method configurarAcciones() {
@@ -261,6 +261,7 @@ object gestorNiveles {
     method iniciarNivelActual() {
         game.clear()
         config.configurarDimensiones()
+        game.addVisual(fondo)
         personaje.reiniciar()
         generadorPociones.reiniciar()
         niveles.get(nivelActual).iniciar()
@@ -290,4 +291,11 @@ object gestorNiveles {
         nivelActual += 1
         self.mostrarPresentacionNivel()
     }
+}
+
+//consultar si esta bien el uso de fondo como object y no como boardground
+object fondo {
+    method position() = game.origin()
+    method image() = "fondo1015.png"
+    method teAtaca(alguien){}
 }
