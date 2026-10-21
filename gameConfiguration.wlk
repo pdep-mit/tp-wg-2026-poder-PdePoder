@@ -4,14 +4,15 @@ import pociones.*
 import enemigos.*
 import trampas.*
 import wollok.game.*
+import menu.*
 
 object config {
 
-    method configurarJuego() {
-        game.title("Grupo: PdePoder | La Llave")
-        self.configurarDimensiones()
-        gestorNiveles.iniciarNivelActual()  
-    }
+ method configurarJuego() {
+    game.title("Grupo: PdePoder | La Llave")
+    self.configurarDimensiones()
+    menuInicio.iniciar()
+}
 
     method configurarDimensiones() {
         game.height(10)
@@ -213,12 +214,13 @@ object finAnimacion {
 object gestorNiveles {
     var nivelActual = 0
     const niveles = [nivel1, nivel2, nivel3]
-    method iniciarNivelActual() {
-        game.clear()
-        personaje.reiniciar()
-        generadorPociones.reiniciar()
-        niveles.get(nivelActual).iniciar()
-    }
+   method iniciarNivelActual() {
+    game.clear()
+    game.boardGround("fondo1015.png")
+    personaje.reiniciar()
+    generadorPociones.reiniciar()
+    niveles.get(nivelActual).iniciar()
+}
 
 
     method finDelJuego() {
