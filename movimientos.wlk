@@ -1,4 +1,16 @@
-import gameConfiguration.*
+import wollok.game.*
+
+object tablero {
+    method esPosicionValida(posicion) {
+        return posicion.x().between(0, game.width() - 1) and 
+               posicion.y().between(0, game.height() - 1)
+    }
+
+    method esLimiteIzquierdo(posicion) = posicion.x() <= 0
+    method esLimiteDerecho(posicion) = posicion.x() >= game.width() - 1
+    method esLimiteInferior(posicion) = posicion.y() <= 0
+    method esLimiteSuperior(posicion) = posicion.y() >= game.height() - 1
+}
 
 object movimientoRandom {
     const direcciones = [haciaArriba, haciaAbajo, haciaLaIzquierda, haciaLaDerecha]
@@ -12,36 +24,28 @@ object movimientoRandom {
 object movimiento {
     method mover(personajeLibre, direccion) {
         const nuevaPosicion = direccion.posicionSiguiente(personajeLibre.position())
-        personajeLibre.position(nuevaPosicion)
+        if (tablero.esPosicionValida(nuevaPosicion)) {
+            personajeLibre.position(nuevaPosicion)
+        }
     }
 }
 
 object haciaArriba {
-    method posicionSiguiente(posicion) {
-        const nuevaPosicion = posicion.up(1)
-        return if (nuevaPosicion.y() <= 9) nuevaPosicion else posicion
-    } 
+    method posicionSiguiente(posicion) = posicion.up(1)
+    method opuesta() = haciaAbajo
 }
 
 object haciaAbajo {
-    method posicionSiguiente(posicion) { 
-        const nuevaPosicion = posicion.down(1)
-        return if (nuevaPosicion.y() >= 0) nuevaPosicion else posicion
-    }
+    method posicionSiguiente(posicion) = posicion.down(1)
+    method opuesta() = haciaArriba
 }
 
 object haciaLaDerecha {
-    method posicionSiguiente(posicion) { 
-        const nuevaPosicion = posicion.right(1)
-        // Límite en x = 14: si intenta avanzar más allá, se queda en la misma posición
-        return if (nuevaPosicion.x() <= 14) nuevaPosicion else posicion
-    }
+    method posicionSiguiente(posicion) = posicion.right(1)
+    method opuesta() = haciaLaIzquierda
 }
 
 object haciaLaIzquierda {
-    method posicionSiguiente(posicion) {
-        const nuevaPosicion = posicion.left(1)
-        // Límite en x = 0: si intenta avanzar más a la izquierda, se queda en la misma posición
-        return if (nuevaPosicion.x() >= 0) nuevaPosicion else posicion
-    }	
+    method posicionSiguiente(posicion) = posicion.left(1)
+    method opuesta() = haciaLaDerecha
 }
