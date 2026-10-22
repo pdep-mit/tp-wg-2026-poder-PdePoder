@@ -1,8 +1,8 @@
 import wollok.game.*
 import gameConfiguration.*
+
 object personaje {
     var property vida = 100
-    var property energia = 50
     var property position = game.origin()
 
     method estaMuerto() = vida <= 0
@@ -25,15 +25,8 @@ object personaje {
         }
     }
 
-    method sumarEnergia(cantidad) {
-        if (self.estaVivo()) {
-            energia = (energia + cantidad).min(50)
-        }
-    }
-
     method reiniciar() {
         vida = 100
-        energia = 50
         position = game.origin()
     }
 
@@ -44,20 +37,21 @@ object personaje {
 
 // Visual para el ícono de corazón/vida
 object iconoVida {
-    method position() = game.at(0, 9) // Volvemos a la casilla superior
+    method position() = game.at(0, 9)
     method image() = "corazon.png"
 }
 
 // Visual para el texto del contador de vida (se superpone sobre el corazón)
 object contadorVida {
-    method position() = game.at(0, 9) // Misma posición para quedar centrado sobre el corazón
+    method position() = game.at(0, 9)
     method text() = personaje.vida().toString()
     method textColor() = "FFFFFFFF" // Texto blanco
 }
+
 object llave {
     var property position = game.at(14, 8)
     method image() = "llave.png"
-    method teAtaca(alguien){
+    method teAtaca(alguien) {
         alguien.agarrarLaLlave()
     }
 }

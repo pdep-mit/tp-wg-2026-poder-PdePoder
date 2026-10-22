@@ -16,17 +16,6 @@ class Pocion {
     }
 }
 
-class PocionEnergizante inherits Pocion {
-
-    method image() = "pocion_verde.png"
-
-    override method interactuar(alguien) {
-        alguien.sumarEnergia(20)
-        game.say(alguien, "¡+20 de Energía!")
-        super(alguien)
-    }
-}
-
 class PocionCurativa inherits Pocion {
 
     method image() = "pocion_roja.png"
@@ -35,7 +24,6 @@ class PocionCurativa inherits Pocion {
         alguien.curar(20)
         game.say(alguien, "¡+20 de Vida!")
         super(alguien)
-        
     }
 }
 
@@ -49,6 +37,7 @@ class PocionVenenosa inherits Pocion {
         super(alguien)
     }
 }
+
 // Objeto generador de pociones con límite máximo de 4 en pantalla
 object generadorPociones {
     const pocionesActivas = [] // Lista para llevar el control de cuántas hay en pantalla
@@ -68,10 +57,9 @@ object generadorPociones {
         const y = 0.randomUpTo(game.height()).truncate(0)
         const pos = game.at(x, y)
 
-        const tipo = (1..3).anyOne()
+        const tipo = (1..2).anyOne() // Elige entre poción curativa (1) o venenosa (2)
 
-        return if (tipo == 1) new PocionEnergizante(position = pos)
-               else if (tipo == 2) new PocionCurativa(position = pos)
+        return if (tipo == 1) new PocionCurativa(position = pos)
                else new PocionVenenosa(position = pos)
     }
 
