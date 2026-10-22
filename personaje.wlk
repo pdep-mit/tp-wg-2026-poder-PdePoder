@@ -25,12 +25,19 @@ object personaje {
         }
     }
 
-    method reiniciar() {
-        vida = 100
+    // Resetea solo la posición al pasar de nivel, conservando la vida actual
+    method reposicionar() {
         position = game.origin()
     }
 
+    // Reinicio completo (usado al morir o reiniciar la partida desde Nivel 1)
+    method reiniciar() {
+        vida = 100
+        self.reposicionar()
+    }
+
     method agarrarLaLlave() {
+        game.say(self, "¡La tengo!")
         gestorNiveles.completarNivel()
     }
 }
@@ -51,6 +58,7 @@ object contadorVida {
 object llave {
     var property position = game.at(14, 8)
     method image() = "llave.png"
+
     method teAtaca(alguien) {
         alguien.agarrarLaLlave()
     }

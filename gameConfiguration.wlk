@@ -68,13 +68,10 @@ object config {
 
     method configurarTomarLlave() {
         game.onCollideDo(llave, { alguien =>
-            alguien.vida(100)
-            game.say(alguien, "¡La tengo!")
-            gestorNiveles.completarNivel()
+            llave.teAtaca(alguien)
         })
     }
 
-    // Reinicia siempre devolviendo al jugador al Nivel 1
     method reiniciar() {
         gestorNiveles.reiniciarAlNivelUno()
     }
@@ -219,13 +216,14 @@ object gestorNiveles {
 
     method iniciarNivelActual() {
         game.clear()
-        personaje.reiniciar()
+        personaje.reposicionar()
         generadorPociones.reiniciar()
         niveles.get(nivelActual).iniciar()
     }
 
     method reiniciarAlNivelUno() {
         nivelActual = 0
+        personaje.reiniciar()
         self.iniciarNivelActual()
     }
 
