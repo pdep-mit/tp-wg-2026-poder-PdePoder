@@ -4,15 +4,14 @@ import pociones.*
 import enemigos.*
 import trampas.*
 import wollok.game.*
-import menu.*
 
 object config {
 
- method configurarJuego() {
-    game.title("Grupo: PdePoder | La Llave")
-    self.configurarDimensiones()
-    menuInicio.iniciar()
-}
+    method configurarJuego() {
+        game.title("Grupo: PdePoder | La Llave")
+        self.configurarDimensiones()
+        gestorNiveles.iniciarNivelActual()  
+    }
 
     method configurarDimensiones() {
         game.height(10)
@@ -67,18 +66,21 @@ object config {
         })
     }
 
-    //method configurarTomarLlave() {
-    //    game.onCollideDo(llave, { alguien =>
-    //        alguien.agarrarLaLlave()
-    //    })
-    //}
+    method configurarTomarLlave() {
+        game.onCollideDo(llave, { alguien =>
+            alguien.vida(100)
+            game.say(alguien, "¡La tengo!")
+            gestorNiveles.completarNivel()
+        })
+    }
 
+    // Reinicia siempre devolviendo al jugador al Nivel 1
     method reiniciar() {
-        gestorNiveles.iniciarNivelActual()
+        gestorNiveles.reiniciarAlNivelUno()
     }
 }
 
-// ================= NIVELES REDISEÑADOS =================
+// ================= NIVELES =================
 
 object nivel1 {
     const enemigosComunes = [fantasma1, fantasma2, escorpion1]
@@ -96,9 +98,9 @@ object nivel1 {
         config.configurarAcciones()
         config.configurarColisiones()
         config.configurarMovimientoEnemigos(enemigosComunes)
-        //config.configurarTomarLlave()
+        config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje,"¡Nivel 1: Evitá las trampas y enemigos!")
+        game.say(personaje, "¡Nivel 1: Evitá las trampas y enemigos!")
     }
 
     method detallesVisuales() {
@@ -136,9 +138,9 @@ object nivel2 {
         config.configurarMovimientoEnemigos(enemigosComunes)
         config.configurarMovimientoSerpientes(serpientes)
         config.configurarCaerEnTrampa()
-        //config.configurarTomarLlave()
+        config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje,"¡Nivel 2: Cuidado con la serpiente!")
+        game.say(personaje, "¡Nivel 2: Cuidado con la serpiente!")
     }
 
     method detallesVisuales() {
@@ -179,9 +181,9 @@ object nivel3 {
         config.configurarMovimientoEnemigos(enemigosComunes)
         config.configurarMovimientoSerpientes(serpientes)
         config.configurarCaerEnTrampa()
-        //config.configurarTomarLlave()
+        config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje,"¡Nivel Final: Desafío Extremo!")
+        game.say(personaje, "¡Nivel Final: Desafío Extremo!")
     }
 
     method detallesVisuales() {
@@ -214,14 +216,18 @@ object finAnimacion {
 object gestorNiveles {
     var nivelActual = 0
     const niveles = [nivel1, nivel2, nivel3]
-   method iniciarNivelActual() {
-    game.clear()
-    game.boardGround("fondo1015.png")
-    personaje.reiniciar()
-    generadorPociones.reiniciar()
-    niveles.get(nivelActual).iniciar()
-}
 
+    method iniciarNivelActual() {
+        game.clear()
+        personaje.reiniciar()
+        generadorPociones.reiniciar()
+        niveles.get(nivelActual).iniciar()
+    }
+
+    method reiniciarAlNivelUno() {
+        nivelActual = 0
+        self.iniciarNivelActual()
+    }
 
     method finDelJuego() {
         game.clear()
@@ -229,8 +235,7 @@ object gestorNiveles {
         game.onTick(200, "animarFin", { finAnimacion.animar() })
         game.say(finAnimacion, "¡Completaste el juego! Presioná R para reiniciar")
         keyboard.r().onPressDo({
-            nivelActual = 0
-            self.iniciarNivelActual()
+            self.reiniciarAlNivelUno()
         })
     }
 
