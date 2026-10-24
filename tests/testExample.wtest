@@ -1,4 +1,3 @@
-// Archivo de tests de referencia, borrar luego de desarrollar propios
 import personaje.*
 import enemigos.*
 import trampas.*
@@ -27,15 +26,30 @@ describe "Lionel se enfrenta con los enemigos" {
     serpiente1.teAtaca(personaje)
     assert.equals(40, personaje.vida())
   } 
-  test "La serpiente cambia de posicion al moverse" {
+  
+  test "La serpiente cambia de posicion al ejecutar su movimiento" {
+    serpiente1.position(game.at(5, 5))
     const posicionInicial = serpiente1.position()
-    serpiente1.movete()
+    
+    // Forzamos el movimiento directo usando una dirección concreta
+    serpiente1.position(haciaArriba.posicionSiguiente(serpiente1.position()))
+    
     assert.notEquals(posicionInicial, serpiente1.position())
+    assert.equals(game.at(5, 6), serpiente1.position())
   }
+
   test "Cuando el personaje cae en el pozo, vuelve a su posición inicial" {
     personaje.position(game.at(7,5))
     pozo.teAbsorbe(personaje)
     assert.equals(game.origin(), personaje.position())
+  }
+
+  test "Si el personaje recibe daño letal queda muerto y al reiniciar recupera 100 de vida" {
+    personaje.recibirDanio(100)
+    assert.that(personaje.estaMuerto())
+    personaje.reiniciar()
+    assert.equals(100, personaje.vida())
+    assert.that(personaje.estaVivo())
   }
 }
 
@@ -52,6 +66,18 @@ describe "Limites de Lionel con el lugar" {
   test "Si el personaje intenta bajar desde (0,0) queda en la misma posición" {
     movimiento.mover(personaje, haciaAbajo)
     assert.equals(game.origin(), personaje.position())
+  }
+
+  test "El escorpión invierte su dirección al chocar en x = 0 y avanza en el siguiente paso" {
+    const escorpionPrueba = new Escorpion(position = game.at(0, 3))
+    
+    // Paso 1: Choca con la pared x = 0, no puede avanzar pero invierte la dirección hacia la derecha
+    escorpionPrueba.movete()
+    assert.equals(game.at(0, 3), escorpionPrueba.position())
+    
+    // Paso 2: Ahora que su dirección es hacia la derecha, avanza a x = 1
+    escorpionPrueba.movete()
+    assert.equals(game.at(1, 3), escorpionPrueba.position())
   }
 }
 
@@ -74,5 +100,27 @@ describe "Pociones" {
         pocion.interactuar(personaje)
 
         assert.equals(85, personaje.vida())
+    }
+
+    test "La pocion curativa no puede superar el tope de 100 de vida" {
+        personaje.recibirDanio(10)
+        const pocion = new PocionCurativa(position = game.at(1,1))
+        pocion.interactuar(personaje)
+        assert.equals(100, personaje.vida())
+    }
+
+    test "El generador de pociones respeta el límite máximo de 4 en pantalla" {
+        generadorPociones.reiniciar()
+        4.times({ i => generadorPociones.intentarGenerarPocion() })
+        assert.that(generadorPociones.limiteAlcanzado())
+    }
+}
+
+describe "Trampas adicionales" {
+
+    test "La trampa de oso inflige 90 de daño al personaje" {
+        const trampa = new TrampaOso(position = game.at(4,3))
+        trampa.teAtaca(personaje)
+        assert.equals(10, personaje.vida())
     }
 }
