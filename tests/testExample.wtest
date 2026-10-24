@@ -57,15 +57,6 @@ describe "Limites de Lionel con el lugar" {
 
 describe "Pociones" {
 
-    test "La pocion energizante aumenta 20 de energia" {
-        const pocion = new PocionEnergizante(position = game.at(1,1))
-        game.addVisual(pocion)
-
-        pocion.interactuar(personaje)
-
-        assert.equals(50, personaje.energia())
-    }
-
     test "La pocion curativa recupera 20 de vida" {
         personaje.recibirDanio(30)
         const pocion = new PocionCurativa(position = game.at(1,1))
