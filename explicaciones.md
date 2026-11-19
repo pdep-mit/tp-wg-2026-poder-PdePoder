@@ -6,7 +6,7 @@ Para el modelado de los enemigos, se creó una clase abstracta Enemigo que conti
 
 Además, se implementó herencia para especializar las clases Fantasma, Serpiente y Escorpión, las cuales heredan las características generales de un enemigo y sobrescriben (override) aquellos métodos cuyo comportamiento es particular para cada tipo. De esta forma, se reutiliza el código común, se evita la duplicación de lógica y se facilita la incorporación de nuevos enemigos en el futuro.
 
-![diagrama](image.png) //REHACER DIAGRAMA 
+![diagrama](image.png) 
 
 Tambien Para modelar las pociones se utilizó herencia mediante una clase base Pocion, que define el comportamiento común a todas ellas, como la interacción con el personaje y la eliminación de la poción una vez utilizada. A partir de esta clase se especializaron PocionCurativa y PocionVenenosa, las cuales sobrescriben el método interactuar() para generar efectos distintos. Esto permitio reutilizar código común y tratar a todas las pociones de forma polimórfica, independientemente de su efecto particular.
 
