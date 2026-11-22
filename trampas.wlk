@@ -24,7 +24,3 @@ class TrampaOso {
         game.say(personaje, "¡Caí en una trampa de oso! (-90 vida)")
     }
 }
-
-// Instancias fijas de trampas para organizar los niveles
-const trampaOso1 = new TrampaOso(position = game.at(6, 3))
-const trampaOso2 = new TrampaOso(position = game.at(11, 6))

@@ -42,14 +42,16 @@ object config {
         })
     }
 
-    method configurarMovimientoEnemigos(enemigos) {
-        game.onTick(400, "moverEnemigos", {
+    // Ahora recibe el intervalo de tiempo para escalar velocidad según el nivel
+    method configurarMovimientoEnemigos(enemigos, intervaloMs) {
+        game.onTick(intervaloMs, "moverEnemigos", {
             enemigos.forEach({ enemigo => enemigo.movete() })
         })
     }
 
-    method configurarMovimientoSerpientes(serpientes) {
-        game.onTick(350, "moverSerpiente", {
+    // Ahora recibe el intervalo de tiempo para escalar velocidad según el nivel
+    method configurarMovimientoSerpientes(serpientes, intervaloMs) {
+        game.onTick(intervaloMs, "moverSerpiente", {
             serpientes.forEach({ serpiente => serpiente.movete() })
         })
     }
@@ -80,21 +82,34 @@ object config {
 // ================= NIVELES =================
 
 object nivel1 {
-    const enemigosComunes = [fantasma1, fantasma2, escorpion1]
-    const trampas = [trampaOso1]
+    var enemigosComunes = []
+    var serpientes = []
+    var trampas = []
 
     method iniciar() {    
         generadorPociones.reiniciar()
+        llave.position(game.at(14, 8))
         
-        // Posiciones iniciales
-        fantasma1.position(game.at(3, 1))
-        fantasma2.position(game.at(10, 1))
-        escorpion1.position(game.at(10, 4))
+        enemigosComunes = [
+            new Fantasma(position = game.at(3, 1)),
+            new Fantasma(position = game.at(7, 8)),
+            new Fantasma(position = game.at(11, 2)),
+            new Escorpion(position = game.at(10, 4)),
+            new Escorpion(position = game.at(4, 7))
+        ]
+        serpientes = [
+            new Serpiente(position = game.at(12, 7))
+        ]
+        trampas = [
+            new TrampaOso(position = game.at(6, 3)),
+            new TrampaOso(position = game.at(12, 5))
+        ]
 
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
-        config.configurarMovimientoEnemigos(enemigosComunes)
+        config.configurarMovimientoEnemigos(enemigosComunes, 330)
+        config.configurarMovimientoSerpientes(serpientes, 360)
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
         game.say(personaje, "¡Nivel 1: Evitá las trampas y enemigos!")
@@ -110,34 +125,49 @@ object nivel1 {
 
         trampas.forEach({ trampa => game.addVisual(trampa) })
         enemigosComunes.forEach({ enemigo => game.addVisual(enemigo) })
+        serpientes.forEach({ serpiente => game.addVisual(serpiente) })
     }
 
     method completar() { gestorNiveles.siguienteNivel() } 
 }
 
 object nivel2 {
-    const enemigosComunes = [fantasma1, escorpion1, escorpion2]
-    const serpientes = [serpiente1]
-    const trampas = [pozo, trampaOso1]
+    var enemigosComunes = []
+    var serpientes = []
+    var trampas = []
 
     method iniciar() {  
         generadorPociones.reiniciar()
+        llave.position(game.at(13, 8))
+        pozo.position(game.at(7, 5))
 
-        // Reset de posiciones
-        fantasma1.position(game.at(5, 1))
-        escorpion1.position(game.at(10, 3))
-        escorpion2.position(game.at(2, 7))
-        serpiente1.position(game.at(13, 8))
+        enemigosComunes = [
+            new Fantasma(position = game.at(4, 1)),
+            new Fantasma(position = game.at(8, 8)),
+            new Fantasma(position = game.at(12, 3)),
+            new Escorpion(position = game.at(10, 2)),
+            new Escorpion(position = game.at(2, 5)),
+            new Escorpion(position = game.at(13, 6))
+        ]
+        serpientes = [
+            new Serpiente(position = game.at(9, 7)),
+            new Serpiente(position = game.at(5, 7))
+        ]
+        trampas = [
+            pozo,
+            new TrampaOso(position = game.at(5, 3)),
+            new TrampaOso(position = game.at(11, 4))
+        ]
         
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
-        config.configurarMovimientoEnemigos(enemigosComunes)
-        config.configurarMovimientoSerpientes(serpientes)
+        config.configurarMovimientoEnemigos(enemigosComunes, 240)
+        config.configurarMovimientoSerpientes(serpientes, 210)
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()
-        game.say(personaje, "¡Nivel 2: Cuidado con la serpiente!")
+        game.say(personaje, "¡Nivel 2: Más rápidos y peligrosos!")
     }
 
     method detallesVisuales() {
@@ -157,26 +187,41 @@ object nivel2 {
 }
 
 object nivel3 {
-    const enemigosComunes = [fantasma1, fantasma2, escorpion1, escorpion2]
-    const serpientes = [serpiente1, serpiente2]
-    const trampas = [pozo, trampaOso1, trampaOso2]
+    var enemigosComunes = []
+    var serpientes = []
+    var trampas = []
 
     method iniciar() {  
         generadorPociones.reiniciar()
+        llave.position(game.at(14, 8))
+        pozo.position(game.at(8, 4))
 
-        // Reset de posiciones extremas
-        fantasma1.position(game.at(4, 1))
-        fantasma2.position(game.at(8, 1))
-        escorpion1.position(game.at(12, 2))
-        escorpion2.position(game.at(2, 6))
-        serpiente1.position(game.at(13, 8))
-        serpiente2.position(game.at(1, 8))
+        enemigosComunes = [
+            new Fantasma(position = game.at(3, 1)),
+            new Fantasma(position = game.at(6, 8)),
+            new Fantasma(position = game.at(9, 2)),
+            new Fantasma(position = game.at(12, 7)),
+            new Escorpion(position = game.at(14, 2)),
+            new Escorpion(position = game.at(2, 5)),
+            new Escorpion(position = game.at(11, 7))
+        ]
+        serpientes = [
+            new Serpiente(position = game.at(9, 7)),
+            new Serpiente(position = game.at(3, 7)),
+            new Serpiente(position = game.at(10, 1))
+        ]
+        trampas = [
+            pozo,
+            new TrampaOso(position = game.at(5, 2)),
+            new TrampaOso(position = game.at(10, 6)),
+            new TrampaOso(position = game.at(12, 3))
+        ]
 
         self.detallesVisuales()
         config.configurarAcciones()
         config.configurarColisiones()
-        config.configurarMovimientoEnemigos(enemigosComunes)
-        config.configurarMovimientoSerpientes(serpientes)
+        config.configurarMovimientoEnemigos(enemigosComunes, 200)
+        config.configurarMovimientoSerpientes(serpientes, 185)
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         config.configurarAparicionPociones()

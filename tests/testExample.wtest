@@ -6,6 +6,11 @@ import pociones.*
 import wollok.game.*
 
 describe "Lionel se enfrenta con los enemigos" {
+  // Instancias locales para aislar cada prueba y evitar instancias globales en enemigos.wlk
+  const fantasma1 = new Fantasma(position = game.at(3, 1))
+  const serpiente1 = new Serpiente(position = game.at(13, 8))
+  const escorpion1 = new Escorpion(position = game.at(10, 3))
+
   test "El personaje arranca con 100 de vida" {
     assert.equals(100, personaje.vida())
   }
