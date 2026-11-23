@@ -3,6 +3,7 @@ import movimientos.*
 import pociones.*
 import enemigos.*
 import trampas.*
+import menu.*
 import wollok.game.*
 
 object config {
@@ -10,7 +11,7 @@ object config {
     method configurarJuego() {
         game.title("Grupo: PdePoder | La Llave")
         self.configurarDimensiones()
-        gestorNiveles.iniciarNivelActual()  
+        menuInicio.iniciar()
     }
 
     method configurarDimensiones() {
@@ -42,14 +43,12 @@ object config {
         })
     }
 
-    // Ahora recibe el intervalo de tiempo para escalar velocidad según el nivel
     method configurarMovimientoEnemigos(enemigos, intervaloMs) {
         game.onTick(intervaloMs, "moverEnemigos", {
             enemigos.forEach({ enemigo => enemigo.movete() })
         })
     }
 
-    // Ahora recibe el intervalo de tiempo para escalar velocidad según el nivel
     method configurarMovimientoSerpientes(serpientes, intervaloMs) {
         game.onTick(intervaloMs, "moverSerpiente", {
             serpientes.forEach({ serpiente => serpiente.movete() })
@@ -138,7 +137,7 @@ object nivel2 {
 
     method iniciar() {  
         generadorPociones.reiniciar()
-        llave.position(game.at(13, 8))
+        llave.position(game.at(14, 8))
         pozo.position(game.at(7, 5))
 
         enemigosComunes = [
