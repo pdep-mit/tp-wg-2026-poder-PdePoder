@@ -190,9 +190,14 @@ object nivel3 {
     var serpientes = []
     var trampas = []
 
+    var alturaLlave = 8
+    var sentidoLlave = -1
+
     method iniciar() {  
         generadorPociones.reiniciar()
-        llave.position(game.at(14, 8))
+        alturaLlave = 8
+        sentidoLlave = -1
+        llave.position(game.at(14, alturaLlave))        
         pozo.position(game.at(8, 4))
 
         enemigosComunes = [
@@ -223,10 +228,24 @@ object nivel3 {
         config.configurarMovimientoSerpientes(serpientes, 185)
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
+        game.onTick(500, "moverLlaveNivel3", {
+        nivel3.moverLlave()
+ })
         config.configurarAparicionPociones()
         game.say(personaje, "¡Nivel Final: Desafío Extremo!")
     }
+method moverLlave() {
+    if (alturaLlave == 2) {
+        sentidoLlave = 1
+    }
 
+    if (alturaLlave == 8) {
+        sentidoLlave = -1
+    }
+
+    alturaLlave += sentidoLlave
+    llave.position(game.at(14, alturaLlave))
+}
     method detallesVisuales() {
         game.addVisual(personaje)
         game.addVisual(llave)
