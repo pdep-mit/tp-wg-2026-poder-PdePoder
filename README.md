@@ -27,9 +27,14 @@ En **La Llave**, Lionel se embarca en una aventura con el objetivo de llegar a l
 
 ## Controles
 
-Flechas: Mover al personaje
-R: Reiniciar el juego
-Enter: Continuar al siguiente nivel
+|  Tecla |  Acción |
+| :---: | :--- |
+| R | Reiniciar el juego |
+| &uarr; | Mover hacia arriba |
+| &darr; | Mover hacia abajo |
+| &larr; | Mover hacia la izquierda |
+| &rarr; | Mover hacia la derecha |
+| Enter | Continuar al siguiente nivel |
 
 # Explicaciones
 
