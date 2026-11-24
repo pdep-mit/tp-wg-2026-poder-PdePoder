@@ -2,7 +2,7 @@ import movimientos.*
 import personaje.*
 import wollok.game.*
 
-object pozo {
+class Pozo {
     var property position = game.at(7, 5)
     method image() = "trampa.png"
 

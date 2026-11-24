@@ -62,6 +62,7 @@ object config {
     }
 
     method configurarCaerEnTrampa() {
+        const pozo = new Pozo()
         game.onCollideDo(pozo, { alguien =>
             pozo.teAbsorbe(alguien)
         })
@@ -138,7 +139,7 @@ object nivel2 {
     method iniciar() {  
         generadorPociones.reiniciar()
         llave.position(game.at(14, 8))
-        pozo.position(game.at(7, 5))
+       
 
         enemigosComunes = [
             new Fantasma(position = game.at(4, 1)),
@@ -153,7 +154,7 @@ object nivel2 {
             new Serpiente(position = game.at(5, 7))
         ]
         trampas = [
-            pozo,
+            new Pozo(position = game.at(7,5)),
             new TrampaOso(position = game.at(5, 3)),
             new TrampaOso(position = game.at(11, 4))
         ]
@@ -198,7 +199,7 @@ object nivel3 {
         alturaLlave = 8
         sentidoLlave = -1
         llave.position(game.at(14, alturaLlave))        
-        pozo.position(game.at(8, 4))
+     
 
         enemigosComunes = [
             new Fantasma(position = game.at(3, 1)),
@@ -215,7 +216,7 @@ object nivel3 {
             new Serpiente(position = game.at(10, 1))
         ]
         trampas = [
-            pozo,
+            new Pozo(position = game.at(8,4)),
             new TrampaOso(position = game.at(5, 2)),
             new TrampaOso(position = game.at(10, 6)),
             new TrampaOso(position = game.at(12, 3))

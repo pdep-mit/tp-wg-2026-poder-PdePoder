@@ -10,6 +10,7 @@ describe "Lionel se enfrenta con los enemigos" {
   const fantasma1 = new Fantasma(position = game.at(3, 1))
   const serpiente1 = new Serpiente(position = game.at(13, 8))
   const escorpion1 = new Escorpion(position = game.at(10, 3))
+  const pozo1 = new Pozo(position = game.at(7,5))
 
   test "El personaje arranca con 100 de vida" {
     assert.equals(100, personaje.vida())
@@ -45,7 +46,7 @@ describe "Lionel se enfrenta con los enemigos" {
 
   test "Cuando el personaje cae en el pozo, vuelve a su posición inicial" {
     personaje.position(game.at(7,5))
-    pozo.teAbsorbe(personaje)
+    pozo1.teAbsorbe(personaje)
     assert.equals(game.origin(), personaje.position())
   }
 
