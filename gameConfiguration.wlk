@@ -230,7 +230,7 @@ object nivel3 {
         config.configurarCaerEnTrampa()
         config.configurarTomarLlave()
         game.onTick(500, "moverLlaveNivel3", {
-        nivel3.moverLlave()
+        self.moverLlave()
  })
         config.configurarAparicionPociones()
         game.say(personaje, "¡Nivel Final: Desafío Extremo!")
