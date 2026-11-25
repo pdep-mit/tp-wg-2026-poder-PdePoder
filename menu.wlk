@@ -12,18 +12,30 @@ object menuInicio {
             gestorNiveles.iniciarNivelActual()
         })
 
-        keyboard.i().onPressDo({
-            game.say(self, "Usa las flechas para moverte. Evita enemigos y trampas. Busca la llave para avanzar.")
-        })
-
         keyboard.m().onPressDo({controlDeVolumen.intercambiarMuteado()})
         keyboard.up().onPressDo({controlDeVolumen.aumentarVolumen()})
         keyboard.down().onPressDo({controlDeVolumen.bajarVolumen()})
+
+        keyboard.i().onPressDo({instrucciones.iniciar()})
     }
 
     method position() = game.origin()
 
     method image() = "menuPv21.png"
+}
+
+object instrucciones {
+    
+    method iniciar() {
+        game.clear()
+        game.addVisual(self)
+
+        keyboard.v().onPressDo({menuInicio.iniciar()})
+    }
+
+    method position() = game.origin()
+    
+    method image() =  "instrucciones.jpg"
 }
 
 object controlDeVolumen {

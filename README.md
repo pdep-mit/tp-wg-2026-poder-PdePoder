@@ -30,11 +30,13 @@ En **La Llave**, Lionel se embarca en una aventura con el objetivo de llegar a l
 |  Tecla |  Acción |
 | :---: | :--- |
 | R | Reiniciar el juego |
-| &uarr; | Mover hacia arriba |
-| &darr; | Mover hacia abajo |
+| &uarr; | Mover hacia arriba o subir volumen|
+| &darr; | Mover hacia abajo o bajar volumen|
 | &larr; | Mover hacia la izquierda |
 | &rarr; | Mover hacia la derecha |
 | Enter | Continuar al siguiente nivel |
+| M | Mutear |
+| I | Instrucciones |
 
 # Explicaciones
 
