@@ -11,7 +11,17 @@ object config {
     method configurarJuego() {
         game.title("Grupo: PdePoder | La Llave")
         self.configurarDimensiones()
+        self.reproduccionMusica()
+        
         menuInicio.iniciar()
+    }
+
+    const music = game.sound("sonidoJuego.mp3")
+    method music(){return music}
+    method reproduccionMusica(){
+        music.shouldLoop(true)
+        music.volume(controlDeVolumen.volumen())
+        music.play()
     }
 
     method configurarDimensiones() {
