@@ -11,7 +11,7 @@ class Pocion {
     }
 
     method stock() {
-        generadorPociones.removerPocion(self) // Notifica al generador para liberar cupo
+        generadorPociones.removerPocion(self) 
         game.removeVisual(self) 
     }
 }
@@ -38,9 +38,9 @@ class PocionVenenosa inherits Pocion {
     }
 }
 
-// Objeto generador de pociones con límite máximo de 4 en pantalla
+
 object generadorPociones {
-    const pocionesActivas = [] // Lista para llevar el control de cuántas hay en pantalla
+    const pocionesActivas = [] 
 
     method limiteAlcanzado() = pocionesActivas.size() >= 4
 
@@ -57,7 +57,7 @@ object generadorPociones {
         const y = 0.randomUpTo(game.height()).truncate(0)
         const pos = game.at(x, y)
 
-        const tipo = (1..2).anyOne() // Elige entre poción curativa (1) o venenosa (2)
+        const tipo = (1..2).anyOne() 
 
         return if (tipo == 1) new PocionCurativa(position = pos)
                else new PocionVenenosa(position = pos)

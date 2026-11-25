@@ -6,7 +6,6 @@ import pociones.*
 import wollok.game.*
 
 describe "Lionel se enfrenta con los enemigos" {
-  // Instancias locales para aislar cada prueba y evitar instancias globales en enemigos.wlk
   const fantasma1 = new Fantasma(position = game.at(3, 1))
   const serpiente1 = new Serpiente(position = game.at(13, 8))
   const escorpion1 = new Escorpion(position = game.at(10, 3))
@@ -37,7 +36,6 @@ describe "Lionel se enfrenta con los enemigos" {
     serpiente1.position(game.at(5, 5))
     const posicionInicial = serpiente1.position()
     
-    // Forzamos el movimiento directo usando una dirección concreta
     serpiente1.position(haciaArriba.posicionSiguiente(serpiente1.position()))
     
     assert.notEquals(posicionInicial, serpiente1.position())
@@ -77,11 +75,9 @@ describe "Limites de Lionel con el lugar" {
   test "El escorpión invierte su dirección al chocar en x = 0 y avanza en el siguiente paso" {
     const escorpionPrueba = new Escorpion(position = game.at(0, 3))
     
-    // Paso 1: Choca con la pared x = 0, no puede avanzar pero invierte la dirección hacia la derecha
     escorpionPrueba.movete()
     assert.equals(game.at(0, 3), escorpionPrueba.position())
     
-    // Paso 2: Ahora que su dirección es hacia la derecha, avanza a x = 1
     escorpionPrueba.movete()
     assert.equals(game.at(1, 3), escorpionPrueba.position())
   }

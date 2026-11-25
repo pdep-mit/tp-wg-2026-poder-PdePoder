@@ -25,12 +25,12 @@ object personaje {
         }
     }
 
-    // Resetea solo la posición al pasar de nivel, conservando la vida actual
+    
     method reposicionar() {
         position = game.origin()
     }
 
-    // Reinicio completo (usado al morir o reiniciar la partida desde Nivel 1)
+    
     method reiniciar() {
         vida = 100
         self.reposicionar()
@@ -42,13 +42,13 @@ object personaje {
     }
 }
 
-// Visual para el ícono de corazón/vida
+
 object iconoVida {
     method position() = game.at(0, 9)
     method image() = "corazon.png"
 }
 
-// Visual para el texto del contador de vida (se superpone sobre el corazón)
+
 object contadorVida {
     method position() = game.at(0, 9)
     method text() = personaje.vida().toString()

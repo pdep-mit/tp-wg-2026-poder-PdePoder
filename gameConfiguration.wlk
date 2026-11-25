@@ -129,7 +129,6 @@ object nivel1 {
         game.addVisual(personaje)
         game.addVisual(llave)
         
-        // HUD
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
 
@@ -184,7 +183,6 @@ object nivel2 {
         game.addVisual(personaje)
         game.addVisual(llave)
 
-        // HUD
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
 
@@ -261,7 +259,6 @@ method moverLlave() {
         game.addVisual(personaje)
         game.addVisual(llave)
 
-        // HUD
         game.addVisual(iconoVida)
         game.addVisual(contadorVida)
 
