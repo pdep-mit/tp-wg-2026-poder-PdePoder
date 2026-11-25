@@ -25,6 +25,8 @@ Recuerden que para cada checkpoint hay [expectativas mínimas](https://docs.goog
 
 En **La Llave**, Lionel se embarca en una aventura con el objetivo de llegar a la llave que le permitirá avanzar al siguiente nivel. Sin embargo, el camino estará lleno de enemigos y trampas que pondrán a prueba su resistencia. Durante el recorrido se encontrará con distintas pociones, aunque no todas serán de ayuda. Buena suerte! :)
 
+![Portada](assets\portada.jpg)
+
 ## Controles
 
 |  Tecla |  Acción |
@@ -37,6 +39,7 @@ En **La Llave**, Lionel se embarca en una aventura con el objetivo de llegar a l
 | Enter | Continuar al siguiente nivel |
 | M | Mutear |
 | I | Instrucciones |
+| V | Volver al menú |
 
 # Explicaciones
 

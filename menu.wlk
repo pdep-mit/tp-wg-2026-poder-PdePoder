@@ -21,7 +21,7 @@ object menuInicio {
 
     method position() = game.origin()
 
-    method image() = "menuPv21.png"
+    method image() = "menuPv22.jpg"
 }
 
 object instrucciones {
