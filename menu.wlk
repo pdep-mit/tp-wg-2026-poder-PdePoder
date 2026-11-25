@@ -35,7 +35,7 @@ object instrucciones {
 
     method position() = game.origin()
     
-    method image() =  "instrucciones.jpg"
+    method image() =  "instrucciones1.jpg"
 }
 
 object controlDeVolumen {
